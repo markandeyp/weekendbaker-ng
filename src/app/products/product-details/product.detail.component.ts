@@ -1,16 +1,19 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/types/product';
 
 @Component({
   selector: 'wb-product-detail',
-  template: ` <div class="card h-100" style="width: 80%;margin:0 auto;">
+  template: ` <div
+    class="card h-100"
+    style="width: 80%;margin:0 auto;"
+    *ngIf="product"
+  >
     <a [routerLink]="reviewsLink">Reviews</a>
-    <img [src]="product?.image" class="card-img-top" [alt]="product?.name" />
+    <img [src]="product?.image" class="card-img-top" [alt]="product?.title" />
     <div class="card-body">
-      <h5 class="card-title">{{ product?.name }}</h5>
+      <h5 class="card-title">{{ product?.title }}</h5>
       <p class="card-text">£{{ product?.price }}</p>
     </div>
     <router-outlet> </router-outlet>
@@ -20,31 +23,13 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   product?: Product;
   subscription?: Subscription;
   reviewsLink?: string;
-  constructor(
-    private service: ProductService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
-    //receive the parameter from route
-    this.route.params.subscribe((params) => {
-      let id = params['id'];
-      //call API to get the data
-      this.subscription = this.service.getProduct(id).subscribe(
-        (res) => {
-          this.reviewsLink = `/product/${id}/reviews`;
-          this.product = res;
-        },
-        (err) => {
-          if (err.status === 404) {
-            //to 404 page
-            this.router.navigate(['404']);
-          } else {
-            //to 500 page
-          }
-        }
-      );
+    console.log('Init details component');
+
+    this.subscription = this.route.data.subscribe((data) => {
+      this.product = data['product'];
     });
   }
 

@@ -22,6 +22,8 @@ import { FourOhFourComponent } from './404/404.component';
 import { AboutComponent } from './about/about.component';
 import { ProductDetailsComponent } from './products/product-details/product.detail.component';
 import { ProductReviewsComponent } from './products/product-details/product.reviews.component';
+import { OrderComponent } from './order/order.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +44,7 @@ import { ProductReviewsComponent } from './products/product-details/product.revi
     AboutComponent,
     ProductDetailsComponent,
     ProductReviewsComponent,
+    OrderComponent,
   ],
   imports: [BrowserModule, FormsModule, HttpClientModule, WBRoutingModule],
   providers: [],

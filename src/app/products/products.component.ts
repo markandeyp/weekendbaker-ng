@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ProductService } from '../services/product.service';
 import { Product } from '../types/product';
 
 @Component({
@@ -9,7 +9,7 @@ import { Product } from '../types/product';
     <wb-product-list [products]="products"></wb-product-list>`,
 })
 export class ProductsComponent implements OnInit, OnDestroy {
-  constructor(private service: ProductService) {}
+  constructor(private route: ActivatedRoute) {}
   products: Product[] = [];
   productSubscription?: Subscription;
 
@@ -22,11 +22,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.productSubscription = this.service
-      .getAllProducts()
-      .subscribe((res) => {
-        this.products = res;
-      });
+    this.productSubscription = this.route.data.subscribe((data) => {
+      this.products = data['products'];
+    });
   }
 
   ngOnDestroy() {

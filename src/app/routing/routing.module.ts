@@ -2,9 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Route } from '@angular/router';
 import { FourOhFourComponent } from '../404/404.component';
 import { AboutComponent } from '../about/about.component';
+import { OrderGuard } from '../guards/order.guard';
+import { OrderComponent } from '../order/order.component';
 import { ProductDetailsComponent } from '../products/product-details/product.detail.component';
 import { ProductReviewsComponent } from '../products/product-details/product.reviews.component';
 import { ProductsComponent } from '../products/products.component';
+import { ProductResolver } from '../resolvers/product.resolver';
+import { ProductsResolver } from '../resolvers/products.resolver';
 
 //define your routes - /products, /product/1, /cart
 //path matching is first-match strategy
@@ -12,13 +16,16 @@ const routes: Route[] = [
   {
     path: 'products',
     component: ProductsComponent,
+    resolve: { products: ProductsResolver },
   },
   {
     path: 'product/:id',
+    canActivateChild: [OrderGuard],
     children: [
       {
         path: 'details',
         component: ProductDetailsComponent,
+        resolve: { product: ProductResolver },
       },
       {
         path: 'reviews',
@@ -37,6 +44,11 @@ const routes: Route[] = [
   {
     path: 'home',
     redirectTo: 'products',
+  },
+  {
+    path: 'order',
+    component: OrderComponent,
+    canActivate: [OrderGuard],
   },
   {
     path: '',
