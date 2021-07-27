@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { merge, Subscription } from 'rxjs';
+import { ProductService } from '../services/product.service';
 import { Product } from '../types/product';
 
 @Component({
@@ -9,7 +10,10 @@ import { Product } from '../types/product';
     <wb-product-list [products]="products"></wb-product-list>`,
 })
 export class ProductsComponent implements OnInit, OnDestroy {
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private productService: ProductService
+  ) {}
   products: Product[] = [];
   productSubscription?: Subscription;
 
@@ -22,9 +26,15 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.productSubscription = this.route.data.subscribe((data) => {
+    /*this.productSubscription = this.route.data.subscribe((data) => {
       this.products = data['products'];
-    });
+    });*/
+    let products = this.productService.getAllProducts(); //try to fetch for 2 seconds
+    let wbProducts = this.productService.getAllWbProducts(); //switch to this after 2 seconds
+
+    merge(products, wbProducts).subscribe((values) =>
+      this.products.push(...values)
+    );
   }
 
   ngOnDestroy() {
