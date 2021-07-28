@@ -3,6 +3,7 @@ import { RouterModule, Route } from '@angular/router';
 import { FourOhFourComponent } from '../404/404.component';
 import { AboutComponent } from '../about/about.component';
 import { OrderGuard } from '../guards/order.guard';
+import { LoginComponent } from '../login/login.component';
 import { OrderComponent } from '../order/order.component';
 import { ProductDetailsComponent } from '../products/product-details/product.detail.component';
 import { ProductReviewsComponent } from '../products/product-details/product.reviews.component';
@@ -20,7 +21,6 @@ const routes: Route[] = [
   },
   {
     path: 'product/:id',
-    canActivateChild: [OrderGuard],
     children: [
       {
         path: 'details',
@@ -49,6 +49,10 @@ const routes: Route[] = [
     path: 'order',
     component: OrderComponent,
     canActivate: [OrderGuard],
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   },
   {
     path: '',

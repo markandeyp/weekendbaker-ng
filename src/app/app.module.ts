@@ -23,6 +23,8 @@ import { AboutComponent } from './about/about.component';
 import { ProductDetailsComponent } from './products/product-details/product.detail.component';
 import { ProductReviewsComponent } from './products/product-details/product.reviews.component';
 import { OrderComponent } from './order/order.component';
+import { LoginComponent } from './login/login.component';
+import { RequiredFieldDirective } from './directives/required.field.directive';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import { OrderComponent } from './order/order.component';
     ProductDetailsComponent,
     ProductReviewsComponent,
     OrderComponent,
+    LoginComponent,
+    RequiredFieldDirective,
   ],
   imports: [BrowserModule, FormsModule, HttpClientModule, WBRoutingModule],
   providers: [],

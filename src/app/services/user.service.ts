@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, BehaviorSubject, Subject } from 'rxjs';
+import { LoginResponse } from '../types/loginresponse';
 import { User } from '../types/user';
 
 @Injectable({ providedIn: 'root' })
@@ -15,8 +16,12 @@ export class UserService {
     return this._loggedIn;
   }
 
-  login() {
-    this._loggedIn.next(true);
+  login(user: {
+    username: string;
+    password: string;
+  }): Observable<LoginResponse> {
+    let url = 'https://fakestoreapi.com/auth/login';
+    return this.http.post<LoginResponse>(url, user);
   }
 
   logout() {
