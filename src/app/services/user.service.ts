@@ -24,6 +24,11 @@ export class UserService {
     return this.http.post<LoginResponse>(url, user);
   }
 
+  signup(user: User): Observable<User> {
+    let url = 'https://wbapi.getsandbox.com/users/';
+    return this.http.post<User>(url, user);
+  }
+
   logout() {
     this._loggedIn.next(false);
   }
@@ -31,5 +36,10 @@ export class UserService {
   getUsers(): Observable<User[]> {
     let url = 'https://fakestoreapi.com/users';
     return this.http.get<User[]>(url);
+  }
+
+  getUser(): Observable<User> {
+    let url = 'https://fakestoreapi.com/users/1';
+    return this.http.get<User>(url);
   }
 }

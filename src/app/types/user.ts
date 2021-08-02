@@ -1,7 +1,7 @@
 export interface User {
-  id: number;
+  id?: number;
   name: { firstname: string; lastname: string };
-  phone: string;
+  phone?: string | string[];
   password: string;
   username: string;
   email: string;
@@ -12,4 +12,5 @@ export interface User {
     zipcode: string;
     geolocation: { lat: string; long: string };
   };
+  __v?: number;
 }

@@ -10,6 +10,7 @@ import { ProductReviewsComponent } from '../products/product-details/product.rev
 import { ProductsComponent } from '../products/products.component';
 import { ProductResolver } from '../resolvers/product.resolver';
 import { ProductsResolver } from '../resolvers/products.resolver';
+import { SignupComponent } from '../signup/signup.component';
 
 //define your routes - /products, /product/1, /cart
 //path matching is first-match strategy
@@ -53,6 +54,10 @@ const routes: Route[] = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'signup',
+    component: SignupComponent,
   },
   {
     path: '',

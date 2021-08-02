@@ -1,11 +1,5 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import {
-  AbstractControl,
-  NgForm,
-  ValidationErrors,
-  Validator,
-  ValidatorFn,
-} from '@angular/forms';
+import { Component, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { LoginResponse } from '../types/loginresponse';
 

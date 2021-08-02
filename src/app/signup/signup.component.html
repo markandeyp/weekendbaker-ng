@@ -1,0 +1,85 @@
+<div class="card h-100" style="width: 30rem; margin: 20px auto;">
+  <div class="card-body">
+    <h5 class="card-title">Signup</h5>
+    <div class="card-text">
+      <form [formGroup]="user" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input class="form-control" type="email" id="email" formControlName="email" />
+        </div>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input class="form-control" type="text" id="username" formControlName="username" />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input class="form-control" type="password" id="password" formControlName="password" />
+        </div>
+        {{user.value | json}}
+        <fieldset formArrayName="phone">
+          <legend>Phones</legend>
+          <div class="form-group mb-1" *ngFor="let phone of phones.controls">
+            <input type="tel" class="form-control" [value]="phone.value" />
+          </div>
+          <button type="button" class="btn btn-link" (click)="addNewPhone()">Add New</button>
+        </fieldset>
+        <fieldset [formGroup]="name">
+          <legend>Name</legend>
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input class="form-control" type="text" id="firstName" formControlName="firstname" />
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input class="form-control" type="text" id="lastName" formControlName="lastname" />
+          </div>
+        </fieldset>
+        <fieldset [formGroup]="address">
+          <legend>Address</legend>
+          <div class="form-group">
+            <label for="city">City</label>
+            <input class="form-control" type="text" id="city" formControlName="city" />
+          </div>
+          <div class="form-group">
+            <label for="street">Street</label>
+            <input class="form-control" type="text" id="street" formControlName="street" />
+          </div>
+          <div class="form-group">
+            <label for="number">Number</label>
+            <input class="form-control" type="text" id="number" formControlName="number" />
+          </div>
+          <div class="form-group">
+            <label for="zip">Zipcode</label>
+            <input class="form-control" type="text" id="zip" formControlName="zipcode" />
+          </div>
+
+          <fieldset [formGroup]="geolocation">
+            <legend>Location</legend>
+            <div class="form-group">
+              <label for="lat">Lat</label>
+              <input class="form-control" type="text" id="lat" formControlName="lat" />
+            </div>
+            <div class="form-group">
+              <label for="long">Long</label>
+              <input class="form-control" type="text" id="long" formControlName="long" />
+            </div>
+            <div class="form-group mt-2 mb-2">
+              <button type="button" class="btn btn-link" (click)="fetchUserLocation()">Populate</button>
+            </div>
+          </fieldset>
+        </fieldset>
+        <div class="form-group mt-2 mb-2">
+          <button type="submit" class="btn btn-primary">Signup</button>
+        </div>
+      </form>
+    </div>
+    <div class="card-footer" *ngIf="success || error">
+      <div class="alert alert-success" role="alert" *ngIf="success">
+        Signup successful
+      </div>
+      <div class="alert alert-danger" role="alert" *ngIf="error">
+        Error during signup
+      </div>
+    </div>
+  </div>
+</div>

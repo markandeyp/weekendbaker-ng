@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -25,6 +25,7 @@ import { ProductReviewsComponent } from './products/product-details/product.revi
 import { OrderComponent } from './order/order.component';
 import { LoginComponent } from './login/login.component';
 import { RequiredFieldDirective } from './directives/required.field.directive';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -49,8 +50,15 @@ import { RequiredFieldDirective } from './directives/required.field.directive';
     OrderComponent,
     LoginComponent,
     RequiredFieldDirective,
+    SignupComponent,
   ],
-  imports: [BrowserModule, FormsModule, HttpClientModule, WBRoutingModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    WBRoutingModule,
+    ReactiveFormsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

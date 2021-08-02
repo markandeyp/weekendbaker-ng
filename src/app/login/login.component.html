@@ -7,7 +7,8 @@
           <label for="username">Username</label>
           <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" wb-required
             [(ngModel)]="model.username" #username="ngModel">
-          <small class="text-danger" *ngIf="username.errors?.required">{{username.errors?.required}}</small>
+          <small class="text-danger"
+            *ngIf="username.touched && username.errors?.required">{{username.errors?.required}}</small>
           <small class="text-danger"
             *ngIf="username.errors?.invalidUsername">{{username.errors?.invalidUsername}}</small>
         </div>
@@ -19,6 +20,8 @@
         </div>
         <div class="form-group mt-2 mb-2">
           <button type="submit" class="btn btn-primary" [disabled]="form.submitted || form.invalid">Submit</button>
+
+          <a class="btn btn-link" [routerLink]="['/signup']">New User? Signup</a>
         </div>
       </form>
     </div>
