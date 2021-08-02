@@ -7,12 +7,12 @@ import { Product } from '../types/product';
   providedIn: 'root',
 })
 export class ProductService {
-  readonly baseUrl = 'http://localhost:4200/assets/data/products.json';
+  readonly baseUrl = 'https://fakestoreapi.com';
 
   constructor(private http: HttpClient) {}
 
   getAllProducts(): Observable<Product[]> {
-    let url = `${this.baseUrl}`;
+    let url = `${this.baseUrl}/products`;
     return this.http.get<Product[]>(url);
   }
 

@@ -13,8 +13,8 @@ import { Product } from 'src/app/types/product';
     <a [routerLink]="reviewsLink">Reviews</a>
     <img [src]="product?.image" class="card-img-top" [alt]="product?.title" />
     <div class="card-body">
-      <h5 class="card-title">{{ product?.title }}</h5>
-      <p class="card-text">£{{ product?.price }}</p>
+      <h5 class="card-title">{{ product?.title | uppercase }}</h5>
+      <p class="card-text">£{{ product?.price | currency }}</p>
     </div>
     <router-outlet> </router-outlet>
   </div>`,

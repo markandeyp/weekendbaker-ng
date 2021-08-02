@@ -1,5 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
-import { ProductsComponent } from './products/products.component';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'wb-root',

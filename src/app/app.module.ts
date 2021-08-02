@@ -26,6 +26,8 @@ import { OrderComponent } from './order/order.component';
 import { LoginComponent } from './login/login.component';
 import { RequiredFieldDirective } from './directives/required.field.directive';
 import { SignupComponent } from './signup/signup.component';
+import { NamePipe } from './pipes/name.pipe';
+import { PriceFilter } from './pipes/pricefilter.pipe';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,8 @@ import { SignupComponent } from './signup/signup.component';
     LoginComponent,
     RequiredFieldDirective,
     SignupComponent,
+    NamePipe,
+    PriceFilter,
   ],
   imports: [
     BrowserModule,
