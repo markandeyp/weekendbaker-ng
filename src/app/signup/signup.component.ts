@@ -102,7 +102,11 @@ export class SignupComponent implements OnInit {
   }
 
   addNewPhone() {
-    this.phones.controls.push(new FormControl(''));
+    this.phones.push(new FormControl(''));
+  }
+
+  removePhone(index: number) {
+    this.phones.removeAt(index);
   }
 
   fetchUserLocation() {

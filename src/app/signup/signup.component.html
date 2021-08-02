@@ -18,8 +18,9 @@
         {{user.value | json}}
         <fieldset formArrayName="phone">
           <legend>Phones</legend>
-          <div class="form-group mb-1" *ngFor="let phone of phones.controls">
-            <input type="tel" class="form-control" [value]="phone.value" />
+          <div class="form-group mb-1" *ngFor="let phone of phones.controls;let i=index">
+            <input type="tel" class="form-control" [formControl]="phones.controls[i]" />
+            <button (click)="removePhone(i)" class="btn btn-link text-danger">X</button>
           </div>
           <button type="button" class="btn btn-link" (click)="addNewPhone()">Add New</button>
         </fieldset>
