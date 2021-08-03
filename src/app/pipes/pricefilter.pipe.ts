@@ -8,9 +8,6 @@ export class PriceFilter implements PipeTransform {
   transform(value: Product[], ...args: number[]): Product[] {
     const min = args[0] || Number.MIN_VALUE;
     const max = args[1] || Number.MAX_VALUE;
-
-    console.log(value, min, max);
-
     return value.filter((p) => p.price >= min && p.price <= max);
   }
 }

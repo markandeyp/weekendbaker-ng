@@ -43,16 +43,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    /*this.productSubscription = this.route.data.subscribe((data) => {
+    this.productSubscription = this.route.data.subscribe((data) => {
       this.products = data['products'];
-    });*/
+    });
 
-    let products = this.productService.getAllProducts(); //try to fetch for 2 seconds
-    let wbProducts = this.productService.getAllWbProducts(); //switch to this after 2 seconds
-
-    merge(products, wbProducts).subscribe(
-      (values) => (this.products = this.products.concat(values))
-    );
+    this.productService.getAllWbProducts().subscribe((products) => {
+      console.log('Products:', products);
+    });
   }
 
   ngOnDestroy() {

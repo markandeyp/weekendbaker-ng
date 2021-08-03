@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
@@ -28,6 +28,9 @@ import { RequiredFieldDirective } from './directives/required.field.directive';
 import { SignupComponent } from './signup/signup.component';
 import { NamePipe } from './pipes/name.pipe';
 import { PriceFilter } from './pipes/pricefilter.pipe';
+import { ToastComponent } from './toast/toast.component';
+import { LogInterceptor } from './services/http.interceptor';
+import { CacheInterceptor } from './services/cache.interceptor';
 
 @NgModule({
   declarations: [
@@ -55,6 +58,7 @@ import { PriceFilter } from './pipes/pricefilter.pipe';
     SignupComponent,
     NamePipe,
     PriceFilter,
+    ToastComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,7 +67,10 @@ import { PriceFilter } from './pipes/pricefilter.pipe';
     WBRoutingModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useExisting: LogInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useExisting: CacheInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
