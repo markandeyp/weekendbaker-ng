@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/types/product';
 
 @Component({
@@ -11,10 +12,10 @@ import { Product } from 'src/app/types/product';
     *ngIf="product"
   >
     <a [routerLink]="reviewsLink">Reviews</a>
-    <img [src]="product?.image" class="card-img-top" [alt]="product?.title" />
+    <img [src]="product?.imageUrl" class="card-img-top" [alt]="product?.name" />
     <div class="card-body">
-      <h5 class="card-title">{{ product?.title | uppercase }}</h5>
-      <p class="card-text">£{{ product?.price | currency }}</p>
+      <h5 class="card-title">{{ product?.name | uppercase }}</h5>
+      <p class="card-text">{{ product?.price | currency }}</p>
     </div>
     <router-outlet> </router-outlet>
   </div>`,
@@ -23,13 +24,18 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   product?: Product;
   subscription?: Subscription;
   reviewsLink?: string;
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private service: ProductService) {}
 
   ngOnInit() {
-    console.log('Init details component');
-
-    this.subscription = this.route.data.subscribe((data) => {
-      this.product = data['product'];
+    this.route.params.subscribe((params) => {
+      const { id } = params;
+      this.service.get(id).subscribe(
+        (product) => {
+          this.product = product;
+          console.log(product);
+        },
+        (err) => console.log('Error fetching product', err)
+      );
     });
   }
 

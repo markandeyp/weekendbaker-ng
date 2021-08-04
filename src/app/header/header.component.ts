@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/user.service';
 import { MenuItem } from '../types/menuitem';
+import { AngularFireAuth } from '@angular/fire/auth';
+import firebase from 'firebase/app';
 
 @Component({
   selector: 'wb-header',
@@ -28,16 +29,34 @@ export class HeaderComponent implements OnInit {
 
   search: string = '';
 
-  constructor(private userService: UserService) {}
+  displayName: string | null = '';
+  constructor(private auth: AngularFireAuth) {}
 
   doSearch() {
     console.log(`Searching for ${this.search}`);
   }
 
   ngOnInit() {
-    this.userService.isUserLoggedIn().subscribe((value) => {
+    /*this.userService.isUserLoggedIn().subscribe((value) => {
       console.log('isloggedin:', value);
       this.isLoggedIn = value;
-    });
+    });*/
+  }
+
+  login() {
+    this.auth
+      .signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      .then((authResponse) => {
+        if (authResponse && authResponse.user) {
+          this.isLoggedIn = true;
+          this.displayName = authResponse.user.displayName;
+        }
+      })
+      .catch((err) => console.log('Erorr during login', err));
+  }
+
+  logout() {
+    this.auth.signOut();
+    this.isLoggedIn = false;
   }
 }

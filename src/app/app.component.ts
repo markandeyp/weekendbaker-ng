@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { NotificationService } from './services/notification.service';
 
 @Component({
@@ -9,7 +10,10 @@ import { NotificationService } from './services/notification.service';
 export class AppComponent implements OnInit {
   title = 'WeekendBaker by PC';
   notification: String = '';
-  constructor(private notificationService: NotificationService) {}
+  constructor(
+    private notificationService: NotificationService,
+    private store: AngularFirestore
+  ) {}
 
   ngOnInit() {
     this.notificationService.getNotifications().subscribe((notification) => {

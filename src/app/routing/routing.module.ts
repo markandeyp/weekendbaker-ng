@@ -18,7 +18,6 @@ const routes: Route[] = [
   {
     path: 'products',
     component: ProductsComponent,
-    resolve: { products: ProductsResolver },
   },
   {
     path: 'product/:id',
@@ -26,7 +25,6 @@ const routes: Route[] = [
       {
         path: 'details',
         component: ProductDetailsComponent,
-        resolve: { product: ProductResolver },
       },
       {
         path: 'reviews',
