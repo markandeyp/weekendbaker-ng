@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "weekendbaker-in": {
+      "hosting": {
+        "weekendbaker": [
+          "weekendbaker-in"
+        ]
+      }
+    }
+  }
+}
