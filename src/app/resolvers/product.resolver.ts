@@ -4,7 +4,7 @@ import {
   RouterStateSnapshot,
   ActivatedRouteSnapshot,
 } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ProductService } from '../services/product.service';
 import { Product } from '../types/product';
 
@@ -17,9 +17,9 @@ export class ProductResolver implements Resolve<Product> {
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<Product> {
+  ): Observable<any> {
     let id = route.params['id'];
     console.log('Product id is:', id);
-    return this.service.getProduct(id);
+    return of(false);
   }
 }

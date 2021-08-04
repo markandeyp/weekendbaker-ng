@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { UserService } from '../services/user.service';
 import { LoginResponse } from '../types/loginresponse';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'wb-login-form',
@@ -19,20 +19,28 @@ export class LoginComponent {
 
   loginResponse?: LoginResponse;
 
-  constructor(private service: UserService) {}
+  constructor(private auth: AngularFireAuth) {}
 
   onSubmit() {
     if (this.form?.valid) {
-      this.service.login(this.model).subscribe(
-        (res) => {
+      this.auth
+        .signInWithEmailAndPassword(this.model.username, this.model.password)
+        .then((authResponse) => {
+          console.log(authResponse.user);
+          this.loginResponse = {
+            status: 'Success',
+            token: authResponse.user?.email,
+          };
           this.form?.resetForm();
-          this.loginResponse = res;
-          if (this.loginResponse.token) {
-            this.model = { username: '', password: '' };
-          }
-        },
-        (err) => console.log('Error during login', err)
-      );
+        })
+        .catch((err) => {
+          console.log('Error during login', err);
+          this.loginResponse = {
+            status: 'Error',
+            msg: err.message,
+          };
+          this.form?.resetForm();
+        });
     }
   }
 }

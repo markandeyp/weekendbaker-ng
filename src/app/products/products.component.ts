@@ -1,26 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { merge, Subscription } from 'rxjs';
-import { PriceFilter } from '../pipes/pricefilter.pipe';
+import { Subscription } from 'rxjs';
 import { ProductService } from '../services/product.service';
 import { Product } from '../types/product';
 
 @Component({
   selector: 'wb-products',
-  template: ` <wb-filter
-      (onFilter)="filterProducts($event)"
-      (onSort)="sortProducts($event)"
-    >
-    </wb-filter>
-    <wb-product-list
-      [products]="products | pricefilter: min:max"
-    ></wb-product-list>`,
+  template: ` <wb-filter (onSort)="sortProducts($event)"> </wb-filter>
+    <wb-product-list [products]="products"></wb-product-list>`,
 })
 export class ProductsComponent implements OnInit, OnDestroy {
-  constructor(
-    private route: ActivatedRoute,
-    private productService: ProductService
-  ) {}
+  constructor(private route: ActivatedRoute, private service: ProductService) {}
   products: Product[] = [];
 
   productSubscription?: Subscription;
@@ -36,24 +26,21 @@ export class ProductsComponent implements OnInit, OnDestroy {
     }
   }
 
-  filterProducts(event: { min: number; max: number }) {
-    console.log('Filter called', event.min, event.max);
-    this.min = event.min;
-    this.max = event.max;
-  }
-
   ngOnInit() {
-    this.productSubscription = this.route.data.subscribe((data) => {
+    /*this.productSubscription = this.route.data.subscribe((data) => {
       this.products = data['products'];
-    });
+    });*/
 
-    this.productService.getAllWbProducts().subscribe((products) => {
-      console.log('Products:', products);
-    });
+    this.service.getAll().subscribe(
+      (data) => {
+        this.products = data;
+        console.log(this.products);
+      },
+      (err) => console.log(err)
+    );
   }
 
   ngOnDestroy() {
-    //Cleanup
     this.productSubscription?.unsubscribe();
   }
 }
