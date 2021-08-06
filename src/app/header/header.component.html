@@ -18,7 +18,17 @@
         </li>
       </ul>
     </div>
+
     <form class="d-flex">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Cart Items {{cartItemCount}}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#" *ngFor="let item of cartItems">{{item.name}}</a>
+        </div>
+      </div>
       <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search"
         [(ngModel)]="search">
       <button class="btn btn-primary" type="submit" (click)="doSearch()">Search</button>

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from '../types/menuitem';
 import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase/app';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Product } from '../types/product';
 
 @Component({
   selector: 'wb-header',
@@ -23,6 +26,10 @@ export class HeaderComponent implements OnInit {
       text: 'Order',
       link: '/order',
     },
+    {
+      text: 'NgRx',
+      link: '/ngrx',
+    },
   ];
 
   isLoggedIn: boolean = false;
@@ -30,7 +37,20 @@ export class HeaderComponent implements OnInit {
   search: string = '';
 
   displayName: string | null = '';
-  constructor(private auth: AngularFireAuth) {}
+
+  cartItems: Product[] = [];
+
+  cartItemCount: number = 0;
+
+  constructor(
+    private auth: AngularFireAuth,
+    private store: Store<{ cart: { items: Product[]; count: number } }>
+  ) {
+    store.select('cart').subscribe((value) => {
+      this.cartItemCount = value.count;
+      this.cartItems = [...value.items];
+    });
+  }
 
   doSearch() {
     console.log(`Searching for ${this.search}`);

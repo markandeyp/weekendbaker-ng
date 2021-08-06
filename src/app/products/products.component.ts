@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { ProductService } from '../services/product.service';
+import { fetchProducts } from '../store/actions';
 import { Product } from '../types/product';
 
 @Component({
@@ -10,7 +11,14 @@ import { Product } from '../types/product';
     <wb-product-list [products]="products"></wb-product-list>`,
 })
 export class ProductsComponent implements OnInit, OnDestroy {
-  constructor(private route: ActivatedRoute, private service: ProductService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private store: Store<{ products: { products: Product[] } }>
+  ) {
+    store
+      .select('products')
+      .subscribe((data) => (this.products = data.products));
+  }
   products: Product[] = [];
 
   productSubscription?: Subscription;
@@ -27,17 +35,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    /*this.productSubscription = this.route.data.subscribe((data) => {
-      this.products = data['products'];
-    });*/
-
-    this.service.getAll().subscribe(
-      (data) => {
-        this.products = data;
-        console.log(this.products);
-      },
-      (err) => console.log(err)
-    );
+    this.store.dispatch(fetchProducts());
   }
 
   ngOnDestroy() {

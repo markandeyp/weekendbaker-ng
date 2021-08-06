@@ -35,6 +35,11 @@ import { PriceFilter } from './pipes/pricefilter.pipe';
 import { ToastComponent } from './toast/toast.component';
 import { LogInterceptor } from './services/http.interceptor';
 import { CacheInterceptor } from './services/cache.interceptor';
+import { CounterComponent } from './counter/counter.component';
+import { StoreModule } from '@ngrx/store';
+import { cartReducer, counterReducer, productsReducer } from './store/reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { ProductEffect } from './services/product.effect';
 
 @NgModule({
   declarations: [
@@ -63,6 +68,7 @@ import { CacheInterceptor } from './services/cache.interceptor';
     NamePipe,
     PriceFilter,
     ToastComponent,
+    CounterComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,6 +78,12 @@ import { CacheInterceptor } from './services/cache.interceptor';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    StoreModule.forRoot({
+      count: counterReducer,
+      cart: cartReducer,
+      products: productsReducer,
+    }),
+    EffectsModule.forRoot([ProductEffect]),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useExisting: LogInterceptor, multi: true },
