@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { LoginResponse } from '../types/loginresponse';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -8,7 +8,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements AfterViewInit {
   @ViewChild(NgForm)
   form?: NgForm;
 
@@ -42,5 +42,8 @@ export class LoginComponent {
           this.form?.resetForm();
         });
     }
+  }
+
+  ngAfterViewInit(){
   }
 }

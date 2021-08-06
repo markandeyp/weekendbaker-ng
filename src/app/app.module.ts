@@ -28,13 +28,11 @@ import { ProductDetailsComponent } from './products/product-details/product.deta
 import { ProductReviewsComponent } from './products/product-details/product.reviews.component';
 import { OrderComponent } from './order/order.component';
 import { LoginComponent } from './login/login.component';
-import { RequiredFieldDirective } from './directives/required.field.directive';
 import { SignupComponent } from './signup/signup.component';
-import { NamePipe } from './pipes/name.pipe';
-import { PriceFilter } from './pipes/pricefilter.pipe';
 import { ToastComponent } from './toast/toast.component';
 import { LogInterceptor } from './services/http.interceptor';
 import { CacheInterceptor } from './services/cache.interceptor';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -58,10 +56,7 @@ import { CacheInterceptor } from './services/cache.interceptor';
     ProductReviewsComponent,
     OrderComponent,
     LoginComponent,
-    RequiredFieldDirective,
     SignupComponent,
-    NamePipe,
-    PriceFilter,
     ToastComponent,
   ],
   imports: [
@@ -72,6 +67,7 @@ import { CacheInterceptor } from './services/cache.interceptor';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    SharedModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useExisting: LogInterceptor, multi: true },

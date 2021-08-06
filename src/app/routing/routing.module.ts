@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Route } from '@angular/router';
+import { RouterModule, Route, PreloadAllModules } from '@angular/router';
 import { FourOhFourComponent } from '../404/404.component';
 import { AboutComponent } from '../about/about.component';
 import { OrderGuard } from '../guards/order.guard';
@@ -8,8 +8,6 @@ import { OrderComponent } from '../order/order.component';
 import { ProductDetailsComponent } from '../products/product-details/product.detail.component';
 import { ProductReviewsComponent } from '../products/product-details/product.reviews.component';
 import { ProductsComponent } from '../products/products.component';
-import { ProductResolver } from '../resolvers/product.resolver';
-import { ProductsResolver } from '../resolvers/products.resolver';
 import { SignupComponent } from '../signup/signup.component';
 
 //define your routes - /products, /product/1, /cart
@@ -58,6 +56,11 @@ const routes: Route[] = [
     component: SignupComponent,
   },
   {
+    path: 'admin',
+    loadChildren: () =>
+      import('../admin/admin.module').then((m) => m.AdminModule),
+  },
+  {
     path: '',
     pathMatch: 'full',
     component: AboutComponent,
@@ -69,7 +72,9 @@ const routes: Route[] = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+  ],
   exports: [RouterModule],
 })
 export class WBRoutingModule {}
