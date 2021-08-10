@@ -1,3 +1,10 @@
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -6,7 +13,12 @@ import { Product } from '../types/product';
 
 @Component({
   selector: 'wb-counter',
-  template: `<div class="container m-5">
+  template: `<div
+    class="container m-5"
+    [@counter]="
+      (count$ | async) > 0 ? 'valueMoreThanZero' : 'valueLessThanZero'
+    "
+  >
     <h1 class="text-center">{{ count$ | async }}</h1>
     <div
       style="width: 500px;margin:0 auto;"
@@ -22,6 +34,30 @@ import { Product } from '../types/product';
       </h2>
     </div>
   </div>`,
+  animations: [
+    trigger('counter', [
+      state(
+        'valueMoreThanZero',
+        style({
+          backgroundColor: 'green',
+        })
+      ),
+      state(
+        'valueLessThanZero',
+        style({
+          backgroundColor: 'red',
+        })
+      ),
+      state(
+        'xyz',
+        style({
+          backgroundColor: 'red',
+        })
+      ),
+      transition('valueMoreThanZero => valueLessThanZero', [animate('2s')]),
+      transition('valueLessThanZero => valueMoreThanZero', [animate('5s')]),
+    ]),
+  ],
 })
 export class CounterComponent {
   count$?: Observable<number>;

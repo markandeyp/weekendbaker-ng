@@ -18,7 +18,10 @@ export class ProductEffect {
       ofType(fetchProducts),
       switchMap(() =>
         this.service.getAll().pipe(
-          map((products) => fetchProductsSuccess({ products })),
+          map((products) => {
+            console.log('Inside effect, Data from API:', products);
+            return fetchProductsSuccess({ products });
+          }),
           catchError(() => of(fetchProductsError()))
         )
       )

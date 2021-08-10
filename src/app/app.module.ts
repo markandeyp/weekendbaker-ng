@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -40,6 +41,7 @@ import { StoreModule } from '@ngrx/store';
 import { cartReducer, counterReducer, productsReducer } from './store/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { ProductEffect } from './services/product.effect';
+import { CountComponent } from './count/count.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +71,7 @@ import { ProductEffect } from './services/product.effect';
     PriceFilter,
     ToastComponent,
     CounterComponent,
+    CountComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,6 +87,7 @@ import { ProductEffect } from './services/product.effect';
       products: productsReducer,
     }),
     EffectsModule.forRoot([ProductEffect]),
+    BrowserAnimationsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useExisting: LogInterceptor, multi: true },
